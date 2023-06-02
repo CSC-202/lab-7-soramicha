@@ -24,28 +24,39 @@ coding: dict = dict()   # key  -> a letter
 ## defining our data structures
 class Node: # NOT given to students
     # TODO
-    
-    def __init__(self):
+    def __init__(self, letter, weight, left: any = None, right: any = None):
+        # defining variables
+        self.weight = weight
+        self.letter = letter
+        self.right = right
+        self.left  = left
         return
 
 ## defining operations
 ### recursively traverses the huffman tree to record the codes
+# goal is to assign a letter with the binary numbers
 def retrieve_codes(v: Node, path: str=''):
     global coding
-    if v.letter != None: # if 'TODO': # TODO
-        coding[v.letter] = None # TODO
-    else:
-        retrieve_codes(None, None) # TODO
-        retrieve_codes(None, None) # TODO
-
+    if len(v.letter) == 1:
+        coding[v.letter] = path
+    if v.left != None:
+        retrieve_codes(v.left, path + '0')
+    if v.right != None:
+        retrieve_codes(v.right, path + '1')
+        
 # STEP 1
 ## counting the frequencies - TODO
-
+message = message.upper()
+for i in message:
+    if i not in freq:
+        freq[i] = 0
+    freq[i] += 1
 
 # STEP 2
 ## initialize the nodes - TODO
 nodes = list()
-nodes.append(Node(0, 'a'))
+for i in freq:
+    nodes.append(Node(i, freq[i], None, None))
 
 # STEP 3 - TODO
 ## combine each nodes until there's only one item in the nodes list
@@ -58,9 +69,9 @@ while len(nodes) > 1:
 
     ## get the second min
     min_b: Node = nodes.pop()
-
+    
     ## combine the two
-    combined: Node = None # TODO
+    combined: Node = Node(min_a.letter + min_b.letter, min_a.weight + min_b.weight, min_a, min_b) # TODO
 
     ## put the combined nodes back in the list of nodes
     nodes.append(combined)
@@ -69,8 +80,10 @@ while len(nodes) > 1:
 ## reconstruct the codes
 huff_root = nodes[0]
 retrieve_codes(huff_root)
-result: str = str() # TODO (hint coding[letter] -> code)
-
+newmessage = ""
+for i in message: newmessage += coding[i]
+result: str = str(newmessage) # TODO (hint coding[letter] -> code)
+print(result)
 # STEP 5
 ## analyize compression performance
 n_original_bits: int = len(message) * 8
