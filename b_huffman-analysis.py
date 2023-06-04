@@ -99,7 +99,7 @@ def huffman(message:str) -> float:
     n_encoded_bits: int = len(result)
     compression_ratio: float = 1 - (n_encoded_bits / n_original_bits)
 
-    return result, coding, compression_ratio, count
+    return result, coding, compression_ratio, count, freq
 
 # LYRICS
 plt.subplot(2, 1, 1)
@@ -112,19 +112,22 @@ MAX_N: int = int(128 * 3 / 2)
 ratios: list = list()
 for i in range(1, MAX_N):
     sub_message = LIGHT_SWITCH[0:i]
-    _, _, ratio, count = huffman(sub_message)
+    _, _, ratio, count, freq = huffman(sub_message)
     ratios.append(ratio)
 x = plt.plot([i for i in range(191)], [i for i in ratios], color='red')
 plt.setp(x, linestyle='dashdot')
-print(count)
+#print(count)
+print(freq, len(LIGHT_SWITCH), '\n')
 
 ## JIGGLE JIGGLE
 ratios: list = list()
 for i in range(1, MAX_N):
     sub_message = BIRTHDAY[0:i]
-    _, _, ratio, count = huffman(sub_message)
+    _, _, ratio, count, freq = huffman(sub_message)
     ratios.append(ratio)
-print(count)
+#print(count)
+print(freq, len(BIRTHDAY), '\n')
+
 x = plt.plot([i for i in range(191)], [i for i in ratios], color='green')
 plt.setp(x, linestyle='dashdot')
 
@@ -132,11 +135,12 @@ plt.setp(x, linestyle='dashdot')
 ratios: list = list()
 for i in range(1, MAX_N):
     sub_message = CUPS[0:i]
-    _, _, ratio, count = huffman(sub_message)
+    _, _, ratio, count, freq = huffman(sub_message)
     ratios.append(ratio)
 x = plt.plot([i for i in range(191)], [i for i in ratios], color='blue')
 plt.setp(x, linestyle='dashdot')
-print(count)
+# print(count)
+print(freq, len(CUPS), '\n')
 
 plt.legend(["LIGHT SWITCH (n=29)", "BIRTHDAY (n=27)", "CUPS (n=27)"], loc="upper right")
 values = []
@@ -158,31 +162,35 @@ plt.subplot(2, 1, 2)
 ratios: list = list()
 for i in range(1, MAX_N):
     sub_message = FIRST[0:i]
-    _, _, ratio, count = huffman(sub_message)
+    _, _, ratio, count, freq = huffman(sub_message)
     ratios.append(ratio)
 x = plt.plot([i for i in range(191)], [i for i in ratios], color='red')
 plt.setp(x, linestyle='dashdot')
-print(count)
+# print(count)
+print(freq, len(FIRST), '\n')
 
 ## GREEN LATERN'S OATH
 ratios: list = list()
 for i in range(1, MAX_N):
     sub_message = SECOND[0:i]
-    _, _, ratio, count = huffman(sub_message)
+    _, _, ratio, count, freq = huffman(sub_message)
     ratios.append(ratio)
 x = plt.plot([i for i in range(191)], [i for i in ratios], color='green')
 plt.setp(x, linestyle='dashdot')
-print(count)
+# print(count)
+print(freq, len(SECOND), '\n')
 
 ## JEDI CODE
 ratios: list = list()
 for i in range(1, MAX_N):
     sub_message = THIRD[0:i]
-    _, _, ratio, count = huffman(sub_message)
+    _, _, ratio, count, freq = huffman(sub_message)
     ratios.append(ratio)
 x = plt.plot([i for i in range(191)], [i for i in ratios], color='blue')
 plt.setp(x, linestyle='dashdot')
-print(count)
+# print(count)
+print(freq, len(THIRD), '\n')
+
 values = []
 for i in range(0, 9):
     values.append(i*25)
